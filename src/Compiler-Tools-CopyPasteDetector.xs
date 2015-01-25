@@ -134,6 +134,7 @@ static void add_stmt(vector<DeparsedStmt *> *deparsed_stmts, Stmt *stmt, string 
 static void set_deparsed_stmts(vector<DeparsedStmt *> *deparsed_stmts, Task *task,
 							   const char *tmp_file_name, size_t stmts_size)
 {
+	(void)(tmp_file_name); // unused parameter
 	map<string, int> stmt_num_manager;
 	for (size_t i = 0; i < stmts_size; i++) {
 		Stmt *stmt = task->at(i);
@@ -168,7 +169,7 @@ static void set_deparsed_stmts(vector<DeparsedStmt *> *deparsed_stmts, Task *tas
 		}
 		pclose(fp);
 #ifdef DEBUG_MODE
-		if (code == "" || code == "'???';\n" || code == ";\n") {
+		if (code == "" || code == "'?\?\?';\n" || code == ";\n") {
 			memset(cmd_buf, 0, cmd_len);
 			snprintf(cmd_buf, cmd_len, "%s -e '%s'", cmd, src);
 			system(cmd_buf);
@@ -177,7 +178,7 @@ static void set_deparsed_stmts(vector<DeparsedStmt *> *deparsed_stmts, Task *tas
 			fprintf(stderr, "orig : [%s]\n", src);
 		}
 #endif
-		if (code == "" || code == "'???';\n" || code == ";\n") continue;
+		if (code == "" || code == "'?\?\?';\n" || code == ";\n") continue;
 		code.erase(code.size() - 1);
 		add_stmt(deparsed_stmts, stmt, code, &stmt_num_manager);
 	}
@@ -310,7 +311,7 @@ CODE:
 	}
 	size_t hop_n = job;
 	pthread_t th[job];
-	ThreadArgs args[job];
+	vector<ThreadArgs> args;
 	for (size_t i = 0; i < job; i++) {
 		args[i].tasks = decoded_tasks;
 		args[i].thread_id = i;

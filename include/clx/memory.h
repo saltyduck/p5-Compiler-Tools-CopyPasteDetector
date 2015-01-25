@@ -70,7 +70,7 @@ namespace clx {
 	
 	template <class Type>
 	inline char* memcpy(const char* dest, const Type* src, int bytes) {
-		return memcpy(reinterpret_cast<unsigned char*>(dest), src, bytes);
+		return memcpy(reinterpret_cast<const unsigned char*>(dest), src, bytes);
 	}
 	
 	/* --------------------------------------------------------------------- */

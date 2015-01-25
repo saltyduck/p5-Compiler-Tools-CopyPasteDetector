@@ -6,6 +6,8 @@ use constant DEBUG => 0;
 
 use_ppport 3.19;
 all_from qw(lib/Compiler/Tools/CopyPasteDetector.pm lib/Compiler/Tools/CopyPasteDetector/*);
+requires 'HTML::Template' => 0;
+requires 'Compiler::Lexer' => 0;
 cc_warnings;
 requires_cplusplus;
 cc_include_paths qw(include);
